@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <header>
+    <img src="OIP.jpg" alt="">
+    <h1>Nuestro Planeta en Crisis</h1>
+    </header>
+
+
+  <nav>
+    <a href="contaminacion1.html">Introduccion</a>
+    <a href="contaminacion2.html">Propuestas Interactivas </a>
+    <a href="contaminacion3.html">Ejes de estudio</a>
+  </nav>
+  
+
+<h1>Simuladores Ambientales</h1>
+
+<section>
+<h2>1. Simulador de Contaminación del Aire (AQI)</h2>
+
+<label>Vehículos en circulación:</label>
+<input type="number" id="autos"><br><br>
+
+<label>Fábricas cercanas:</label>
+<input type="number" id="fabricas"><br><br>
+
+<label>Nivel de polvo (1–10):</label>
+<input type="number" id="polvo"><br><br>
+
+<label>Velocidad del viento (km/h):</label>
+<input type="number" id="viento"><br><br>
+
+<button onclick="calcularAQI()">Calcular AQI</button>
+
+<h3 id="resultadoAQI"></h3>
+</section>
+
+<hr>
+<section>
+<h2>2. Simulador de Reciclaje en Casa</h2>
+
+<label>Plástico reciclado (kg):</label>
+<input type="number" id="plastico"><br><br>
+
+<label>Cartón reciclado (kg):</label>
+<input type="number" id="carton"><br><br>
+
+<label>Vidrio reciclado (kg):</label>
+<input type="number" id="vidrio"><br><br>
+
+<label>Orgánico compostado (kg):</label>
+<input type="number" id="organico"><br><br>
+
+<button onclick="calcularReciclaje()">Calcular Reciclaje</button>
+
+<h3 id="resultadoReciclaje"></h3>
+</section>
+
+<hr>
+
+<section>
+<h2>3. Consumo Energético de Dispositivos</h2>
+
+<label>Horas diarias en el celular:</label>
+<input type="number" id="cel"><br><br>
+
+<label>Horas diarias de videojuegos:</label>
+<input type="number" id="juegos"><br><br>
+
+<label>Horas diarias en tablet:</label>
+<input type="number" id="tablet"><br><br>
+
+<label>Tipo de cargador:</label>
+<select id="cargador">
+    <option value="1">Normal</option>
+    <option value="1.5">Carga rápida</option>
+</select><br><br>
+
+<button onclick="calcularEnergia()">Calcular Energía</button>
+
+<h3 id="resultadoEnergia"></h3>
+</section>
+
+<hr>
+<section>
+<h2>4. Contaminación de los Océanos</h2>
+
+<label>Selecciona un océano:</label>
+<select id="oceano" onchange="mostrarDatosOceano()">
+    <option value="">-- Seleccionar --</option>
+    <option value="Pacífico">Pacífico</option>
+    <option value="Atlántico">Atlántico</option>
+    <option value="Índico">Índico</option>
+    <option value="Ártico">Ártico</option>
+    <option value="Antártico">Antártico</option>
+</select>
+
+<h3 id="infoOceano"></h3>
+</section>
+
+<hr>
+<section>
+<h2>5. Tu Semana Ecológica</h2>
+
+<label><input type="checkbox" id="bicicleta"> Usé bicicleta</label><br>
+<label><input type="checkbox" id="agua"> Reduje agua en la ducha</label><br>
+<label><input type="checkbox" id="recicla"> Reciclé correctamente</label><br>
+<label><input type="checkbox" id="plastico"> Evité comprar plástico</label><br>
+<label><input type="checkbox" id="energia"> Ahorré energía en casa</label><br><br>
+
+<button onclick="calcularSemana()">Ver Resultado</button>
+
+<h3 id="resultadoSemana"></h3>
+</section>
+
+<hr>
+  <script>
+function calcularAQI() {
+    let autos = Number(document.getElementById("autos").value);
+    let fabricas = Number(document.getElementById("fabricas").value);
+    let polvo = Number(document.getElementById("polvo").value);
+    let viento = Number(document.getElementById("viento").value);
+
+    let aqi = autos * 0.5 + fabricas * 20 + polvo * 5 - viento * 2;
+    let estado = "";
+
+    if (aqi < 50) estado = "🟢 Bueno";
+    else if (aqi < 100) estado = "🟡 Regular";
+    else if (aqi < 150) estado = "🟠 Malo";
+    else estado = "🔴 Peligroso";
+
+    document.getElementById("resultadoAQI").innerText =
+        "AQI estimado: " + Math.round(aqi) + " → " + estado;
+}
+
+function calcularReciclaje() {
+    let p = Number(document.getElementById("plastico").value);
+    let c = Number(document.getElementById("carton").value);
+    let v = Number(document.getElementById("vidrio").value);
+    let o = Number(document.getElementById("organico").value);
+
+    let total = p + c + v + o;
+    let ahorro = total * 1.5;
+
+    document.getElementById("resultadoReciclaje").innerText =
+        "Reciclas " + total + " kg/semana. Ahorro estimado: " +
+        ahorro.toFixed(1) + " kg de CO₂.";
+}
+
+function calcularEnergia() {
+    let cel = Number(document.getElementById("cel").value);
+    let juegos = Number(document.getElementById("juegos").value);
+    let tablet = Number(document.getElementById("tablet").value);
+    let carg = Number(document.getElementById("cargador").value);
+
+    let energia = (cel + juegos + tablet) * carg * 0.2;
+    let co2 = energia * 0.5;
+
+    document.getElementById("resultadoEnergia").innerText =
+        "Consumo mensual: " + energia.toFixed(2) +
+        " kWh — Emisiones: " + co2.toFixed(2) + " kg CO₂.";
+}
+
+function mostrarDatosOceano() {
+    let o = document.getElementById("oceano").value;
+    let info = "";
+
+    if (o === "Pacífico") info = "Alto nivel de plástico y redes de pesca.";
+    else if (o === "Atlántico") info = "Contaminación moderada por petróleo.";
+    else if (o === "Índico") info = "Alta basura costera.";
+    else if (o === "Ártico") info = "Hielo afectado por microplásticos.";
+    else if (o === "Antártico") info = "Baja contaminación, pero aumenta lentamente.";
+
+    document.getElementById("infoOceano").innerText = info;
+}
+function calcularSemana() {
+    let puntos = 0;
+
+    if (document.getElementById("bicicleta").checked) puntos++;
+    if (document.getElementById("agua").checked) puntos++;
+    if (document.getElementById("recicla").checked) puntos++;
+    if (document.getElementById("plastico").checked) puntos++;
+    if (document.getElementById("energia").checked) puntos++;
+    let nivel = ["Bajo", "Medio", "Bueno", "Excelente"];
+    if (puntos === 0) {
+        document.getElementById("resultadoSemana").innerText =
+            "No te importa el medio ambiente?............. Eww.";
+        return;
+    }
+    document.getElementById("resultadoSemana").innerText =
+        "Tu nivel ecológico esta semana es: " + nivel[puntos - 1];
+}
+</script>
+
+</body>
+</html>
